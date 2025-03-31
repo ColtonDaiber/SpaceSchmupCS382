@@ -14,7 +14,9 @@ public enum WeaponType
     phaser, // [NI] Shots that move in waves
     missile, // [NI] Homing missiles
     laser, // [NI]Damage over time
-    shield // Raise shieldLevel
+    shield, // Raise shieldLevel
+    spreadGold,
+    blasterGold
 }
 
 /// <summary>
@@ -104,10 +106,12 @@ public class Weapon : MonoBehaviour
         switch (type)
         {
             case WeaponType.blaster:
+            case WeaponType.blasterGold:
                 p = MakeProjectile();
                 p.rigid.linearVelocity = vel;
                 break;
             case WeaponType.spread:
+            case WeaponType.spreadGold:
                 p = MakeProjectile(); // Make middle Projectile
                 p.rigid.linearVelocity = vel;
                 p = MakeProjectile(); // Make right Projectile

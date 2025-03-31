@@ -35,8 +35,39 @@ public class Hero : MonoBehaviour
             {
                 Destroy(this.gameObject);
                 Main.S.DelayedRestart(gameRestartDelay);
+                SaveGold();
             }
         }
+    }
+
+    void SaveGold()
+    {
+        PlayerPrefs.SetInt("weapon0", (int)WeaponType.none);
+        PlayerPrefs.SetInt("weapon1", (int)WeaponType.none);
+        PlayerPrefs.SetInt("weapon2", (int)WeaponType.none);
+        PlayerPrefs.SetInt("weapon3", (int)WeaponType.none);
+        PlayerPrefs.SetInt("weapon4", (int)WeaponType.none);
+        
+        if(weapons[0].type == WeaponType.spreadGold || weapons[0].type == WeaponType.blasterGold) PlayerPrefs.SetInt("weapon0", (int)weapons[0].type);
+        if(weapons[1].type == WeaponType.spreadGold || weapons[1].type == WeaponType.blasterGold) PlayerPrefs.SetInt("weapon1", (int)weapons[1].type);
+        if(weapons[2].type == WeaponType.spreadGold || weapons[2].type == WeaponType.blasterGold) PlayerPrefs.SetInt("weapon2", (int)weapons[2].type);
+        if(weapons[3].type == WeaponType.spreadGold || weapons[3].type == WeaponType.blasterGold) PlayerPrefs.SetInt("weapon3", (int)weapons[3].type);
+        if(weapons[4].type == WeaponType.spreadGold || weapons[4].type == WeaponType.blasterGold) PlayerPrefs.SetInt("weapon4", (int)weapons[4].type);
+        PlayerPrefs.Save();
+    }
+    void LoadGold()
+    {
+        weapons[0].SetType((WeaponType)PlayerPrefs.GetInt("weapon0"));
+        weapons[1].SetType((WeaponType)PlayerPrefs.GetInt("weapon1"));
+        weapons[2].SetType((WeaponType)PlayerPrefs.GetInt("weapon2"));
+        weapons[3].SetType((WeaponType)PlayerPrefs.GetInt("weapon3"));
+        weapons[4].SetType((WeaponType)PlayerPrefs.GetInt("weapon4"));
+        //clear
+        PlayerPrefs.SetInt("weapon0", (int)WeaponType.none);
+        PlayerPrefs.SetInt("weapon1", (int)WeaponType.none);
+        PlayerPrefs.SetInt("weapon2", (int)WeaponType.none);
+        PlayerPrefs.SetInt("weapon3", (int)WeaponType.none);
+        PlayerPrefs.SetInt("weapon4", (int)WeaponType.none);
     }
 
     // This variable holds a reference to the last triggering GameObject
@@ -59,7 +90,8 @@ public class Hero : MonoBehaviour
         {
             init = true;
             ClearWeapons();
-            weapons[0].SetType(WeaponType.blaster);
+            LoadGold();
+            if(weapons[0].type == WeaponType.none) weapons[0].SetType(WeaponType.blaster);
         }
 
         // Pull in information from the Input class
@@ -115,7 +147,11 @@ public class Hero : MonoBehaviour
                 shieldLevel++;
                 break;
             default:
-                if (pu.type == weapons[0].type)
+                if (pu.type == weapons[0].type || 
+                    (pu.type == WeaponType.blasterGold && weapons[0].type == WeaponType.blaster) || 
+                    (pu.type == WeaponType.blaster && weapons[0].type == WeaponType.blasterGold) || 
+                    (pu.type == WeaponType.spreadGold && weapons[0].type == WeaponType.spread) || 
+                    (pu.type == WeaponType.spread && weapons[0].type == WeaponType.spreadGold))
                 { // If it is the same type
                     Weapon w = GetEmptyWeaponSlot();
                     if (w != null)
@@ -134,6 +170,7 @@ public class Hero : MonoBehaviour
 
         }
         pu.AbsorbedBy(this.gameObject);
+        SaveGold();
     }
 
     Weapon GetEmptyWeaponSlot()
