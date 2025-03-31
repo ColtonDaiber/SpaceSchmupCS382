@@ -4,12 +4,14 @@ using UnityEngine; // Required for Unity
 using UnityEngine.SceneManagement; // For loading & reloading of scenes
 public class Main : MonoBehaviour
 {
+    static Dictionary<WeaponType, WeaponDefinition> WEAP_DICT;
     static public Main S; // A singleton for Main
     [Header("Set in Inspector")]
     public GameObject[] prefabEnemies; // Array of Enemy prefabs
     public float enemySpawnPerSecond = 0.5f; // # Enemies/second
 
     public float enemyDefaultPadding = 1.5f; // Padding for position
+    public WeaponDefinition[] weaponDefinitions;
     private BoundsCheck bndCheck;
     void Awake()
     {
@@ -18,6 +20,13 @@ public class Main : MonoBehaviour
         bndCheck = GetComponent<BoundsCheck>();
         // Invoke SpawnEnemy() once (in 2 seconds, based on default values)
         Invoke("SpawnEnemy", 1f / enemySpawnPerSecond);
+
+        // A generic Dictionary with WeaponType as the key
+        WEAP_DICT = new Dictionary<WeaponType, WeaponDefinition>(); // a
+        foreach (WeaponDefinition def in weaponDefinitions)
+        { // b
+            WEAP_DICT[def.type] = def;
+        }
     }
     public void SpawnEnemy()
     {
@@ -51,4 +60,15 @@ public class Main : MonoBehaviour
         // Reload _Scene_0 to restart the game
         SceneManager.LoadScene("_Scene_0");
     }
+
+    static public WeaponDefinition GetWeaponDefinition(WeaponType wt)
+    {
+        if (WEAP_DICT.ContainsKey(wt))
+        { // b
+            return (WEAP_DICT[wt]);
+        }
+
+        return (new WeaponDefinition()); // c
+    }
+
 }

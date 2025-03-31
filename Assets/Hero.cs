@@ -10,9 +10,15 @@ public class Hero : MonoBehaviour
     public float rollMult = -45;
     public float pitchMult = 30;
     public float gameRestartDelay = 2f;
+    public GameObject projectilePrefab;
+    public float projectileSpeed = 40;
     [Header("Set Dynamically")]
     [SerializeField]
     private float _shieldLevel = 1;
+
+    public delegate void WeaponFireDelegate();
+    // Create a WeaponFireDelegate field named fireDelegate.
+    public WeaponFireDelegate fireDelegate;
 
     public float shieldLevel
     {
@@ -27,7 +33,7 @@ public class Hero : MonoBehaviour
             if (value < 0)
             {
                 Destroy(this.gameObject);
-                Main.S.DelayedRestart( gameRestartDelay );
+                Main.S.DelayedRestart(gameRestartDelay);
             }
         }
     }
@@ -44,9 +50,13 @@ public class Hero : MonoBehaviour
         {
             Debug.LogError("Hero.Awake() - Attempted to assign second Hero.S!");
         }
+
+        
+
     }
     void Update()
     {
+
         // Pull in information from the Input class
         float xAxis = Input.GetAxis("Horizontal"); // b
         float yAxis = Input.GetAxis("Vertical"); // b
@@ -57,6 +67,11 @@ public class Hero : MonoBehaviour
         transform.position = pos;
         // Rotate the ship to make it feel more dynamic // c
         transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
+
+        if (Input.GetAxis("Jump") == 1 && fireDelegate != null)
+        {
+            fireDelegate(); // e
+        }
     }
 
     void OnTriggerEnter(Collider other)

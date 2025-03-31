@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 8143438922997694559}
   - component: {fileID: 1345091881745447559}
   - component: {fileID: 499251496554386740}
-  - component: {fileID: -3142064321440262559}
+  - component: {fileID: 1273692923583846864}
   m_Layer: 7
   m_Name: Enemy_1
   m_TagString: Enemy
@@ -300,7 +300,7 @@ MonoBehaviour:
   offLeft: 0
   offUp: 0
   offDown: 0
---- !u!114 &-3142064321440262559
+--- !u!114 &1273692923583846864
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -309,10 +309,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8836879934472340064}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c965dba41c3addc4599307ed884ac272, type: 3}
+  m_Script: {fileID: 11500000, guid: 4027809437569254d8040d000ef523ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
   fireRate: 0.3
   health: 10
   score: 100
+  waveFrequency: 2
+  waveWidth: 4
+  waveRotY: 45
