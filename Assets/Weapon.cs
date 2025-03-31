@@ -45,11 +45,11 @@ public class Weapon : MonoBehaviour
     public WeaponDefinition def;
     public GameObject collar;
     public float lastShotTime; // Time last shot was fired
-    private Renderer collarRend;
+    private MeshRenderer collarRend;
     void Start()
     {
         collar = transform.Find("Collar").gameObject;
-        collarRend = collar.GetComponent<Renderer>();
+        collarRend = collar.GetComponent<MeshRenderer>();
         // Call SetType() for the default _type of WeaponType.none
         SetType(_type);
         // Dynamically create an anchor for all Projectiles
@@ -105,17 +105,17 @@ public class Weapon : MonoBehaviour
         {
             case WeaponType.blaster:
                 p = MakeProjectile();
-                p.rigid.velocity = vel;
+                p.rigid.linearVelocity = vel;
                 break;
             case WeaponType.spread:
                 p = MakeProjectile(); // Make middle Projectile
-                p.rigid.velocity = vel;
+                p.rigid.linearVelocity = vel;
                 p = MakeProjectile(); // Make right Projectile
                 p.transform.rotation = Quaternion.AngleAxis(10, Vector3.back);
-                p.rigid.velocity = p.transform.rotation * vel;
+                p.rigid.linearVelocity = p.transform.rotation * vel;
                 p = MakeProjectile(); // Make left Projectile
                 p.transform.rotation = Quaternion.AngleAxis(-10, Vector3.back);
-                p.rigid.velocity = p.transform.rotation * vel;
+                p.rigid.linearVelocity = p.transform.rotation * vel;
                 break;
         }
     }

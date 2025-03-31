@@ -18,6 +18,8 @@ public class Enemy : MonoBehaviour
     public float damageDoneTime; // Time to stop showing damage
     public bool notifiedOfDestruction = false;
 
+    public float powerUpDropChance = .6f;
+
     public Vector3 pos
     {
         get
@@ -81,6 +83,12 @@ public class Enemy : MonoBehaviour
                 if (health <= 0)
                 {
                     // Destroy this Enemy
+                    if (!notifiedOfDestruction)
+                    {
+                        Main.S.ShipDestroyed(this);
+                    }
+                    notifiedOfDestruction = true;
+                    // Destroy this Enemy
                     Destroy(this.gameObject);
                 }
                 Destroy(otherGO);
@@ -108,4 +116,5 @@ public class Enemy : MonoBehaviour
         }
         showingDamage = false;
     }
+
 }

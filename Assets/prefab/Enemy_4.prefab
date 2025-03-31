@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3457084219980850894}
   - component: {fileID: 6004218796345071289}
   - component: {fileID: 172415024232426329}
-  - component: {fileID: 6405005326886406419}
+  - component: {fileID: 2844161003893499973}
   m_Layer: 7
-  m_Name: wingL
+  m_Name: WingL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87,8 +87,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &6405005326886406419
-SphereCollider:
+--- !u!136 &2844161003893499973
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -105,9 +105,11 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 2
   m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Height: 1
+  m_Direction: 0
+  m_Center: {x: 0.00000011920929, y: 0, z: 0}
 --- !u!1 &5724185406956898352
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +123,7 @@ GameObject:
   - component: {fileID: 5038905968291380993}
   - component: {fileID: 8891952263161511222}
   m_Layer: 7
-  m_Name: cockpit
+  m_Name: Cockpit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227,7 +229,7 @@ GameObject:
   - component: {fileID: 7019924774470761566}
   - component: {fileID: 1918446351954707171}
   - component: {fileID: 6432505561492493420}
-  - component: {fileID: 9019408882557080619}
+  - component: {fileID: 1344109087397717763}
   m_Layer: 7
   m_Name: Enemy_4
   m_TagString: Enemy
@@ -293,7 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 492f2a448e818b5489d9d7355a93879b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: -2.5
+  radius: 3.5
   keepOnScreen: 0
   isOnScreen: 1
   camWidth: 0
@@ -302,7 +304,7 @@ MonoBehaviour:
   offLeft: 0
   offUp: 0
   offDown: 0
---- !u!114 &9019408882557080619
+--- !u!114 &1344109087397717763
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -311,13 +313,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 5926045446103133145}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c965dba41c3addc4599307ed884ac272, type: 3}
+  m_Script: {fileID: 11500000, guid: c28d49e0d2e38c1438fcd2d94f360c21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
   fireRate: 0.3
   health: 10
   score: 100
+  showDamageDuration: 0.1
+  originalColors: []
+  materials: []
+  showingDamage: 0
+  damageDoneTime: 0
+  notifiedOfDestruction: 0
+  powerUpDropChance: 1
+  parts:
+  - name: Cockpit
+    health: 10
+    protectedBy:
+    - Fuselage
+    go: {fileID: 0}
+    mat: {fileID: 0}
+  - name: Fuselage
+    health: 10
+    protectedBy:
+    - WingL
+    - WingR
+    go: {fileID: 0}
+    mat: {fileID: 0}
+  - name: WingL
+    health: 10
+    protectedBy: []
+    go: {fileID: 0}
+    mat: {fileID: 0}
+  - name: WingR
+    health: 10
+    protectedBy: []
+    go: {fileID: 0}
+    mat: {fileID: 0}
 --- !u!1 &7992948349193265287
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,9 +362,9 @@ GameObject:
   - component: {fileID: 1938773279631484705}
   - component: {fileID: 1392265168936467134}
   - component: {fileID: 5663566888252044238}
-  - component: {fileID: 8552539040930230803}
+  - component: {fileID: 4797519815425142575}
   m_Layer: 7
-  m_Name: fuselage
+  m_Name: Fuselage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -405,8 +438,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &8552539040930230803
-SphereCollider:
+--- !u!136 &4797519815425142575
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -423,8 +456,10 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 2
   m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8870473669189756500
 GameObject:
@@ -437,9 +472,9 @@ GameObject:
   - component: {fileID: 2923765703203790202}
   - component: {fileID: 4061045796787014331}
   - component: {fileID: 8385622304389853618}
-  - component: {fileID: 8420832504385114686}
+  - component: {fileID: 5969216035959574137}
   m_Layer: 7
-  m_Name: wingR
+  m_Name: WingR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -513,8 +548,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &8420832504385114686
-SphereCollider:
+--- !u!136 &5969216035959574137
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -531,6 +566,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 2
   m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Height: 1
+  m_Direction: 0
+  m_Center: {x: 0.00000011920929, y: 0, z: 0}
